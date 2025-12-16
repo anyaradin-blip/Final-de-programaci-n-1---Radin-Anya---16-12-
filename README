@@ -1,0 +1,18 @@
+# Gestor de Gastos Personales
+
+Programa en Python para registrar y analizar gastos personales desde consola.
+
+## Funcionalidades
+- Alta de gastos
+- Listado en formato tabla
+- Resumen por categoría
+- Persistencia en archivo JSON
+
+## Requisitos
+- Python 3.10+
+
+## Instalación
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
