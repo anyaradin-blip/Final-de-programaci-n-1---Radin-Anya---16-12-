@@ -1,0 +1,61 @@
+"""
+Módulo de gestión de gastos.
+
+Contiene funciones para agregar, listar y resumir gastos.
+"""
+
+from datetime import date
+from tabulate import tabulate
+from app.storage import guardar_gastos
+
+
+def agregar_gasto(gastos: list) -> None:
+    """
+    Agrega un gasto a la lista.
+
+    :param gastos: Lista de gastos existentes
+    """
+    categoria = input("Categoría: ")
+    monto = float(input("Monto: "))
+    descripcion = input("Descripción: ")
+
+    gasto = {
+        "fecha": date.today().isoformat(),
+        "categoria": categoria,
+        "monto": monto,
+        "descripcion": descripcion
+    }
+
+    gastos.append(gasto)
+    guardar_gastos(gastos)
+    print("Gasto agregado correctamente ✅")
+
+
+def listar_gastos(gastos: list) -> None:
+    """
+    Muestra todos los gastos en formato de tabla.
+    """
+    if not gastos:
+        print("No hay gastos registrados.")
+        return
+
+    tabla = [
+        [g["fecha"], g["categoria"], g["monto"], g["descripcion"]]
+        for g in gastos
+    ]
+
+    print(tabulate(tabla, headers=["Fecha", "Categoría", "Monto", "Descripción"]))
+
+
+def resumen_por_categoria(gastos: list) -> None:
+    """
+    Muestra el total de gastos agrupados por categoría.
+    """
+    resumen = {}
+
+    for gasto in gastos:
+        categoria = gasto["categoria"]
+        resumen[categoria] = resumen.get(categoria, 0) + gasto["monto"]
+
+    tabla = [[cat, total] for cat, total in resumen.items()]
+    print(tabulate(tabla, headers=["Categoría", "Total"]))
