@@ -1,0 +1,33 @@
+"""
+Módulo de persistencia de datos.
+
+Se encarga de la lectura y escritura del archivo JSON.
+"""
+
+import json
+from pathlib import Path
+
+RUTA_ARCHIVO = Path("data/gastos.json")
+
+
+def cargar_gastos() -> list:
+    """
+    Carga los gastos desde el archivo JSON.
+
+    :return: Lista de gastos
+    """
+    if not RUTA_ARCHIVO.exists():
+        return []
+
+    with open(RUTA_ARCHIVO, "r", encoding="utf-8") as archivo:
+        return json.load(archivo)
+
+
+def guardar_gastos(gastos: list) -> None:
+    """
+    Guarda los gastos en el archivo JSON.
+
+    :param gastos: Lista de gastos
+    """
+    with open(RUTA_ARCHIVO, "w", encoding="utf-8") as archivo:
+        json.dump(gastos, archivo, indent=4)
